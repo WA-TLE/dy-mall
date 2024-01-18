@@ -1,0 +1,13 @@
+/.git
+**/target/
+.idea
+*.iml
+*.class
+*Test.java
+application-dev.yml
+**/test/
+
+/application-secret.yaml
+/logs/
+hm-service/src/main/resources/application-secret.yaml
+
