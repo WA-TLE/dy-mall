@@ -10,4 +10,4 @@ application-dev.yml
 /application-secret.yaml
 /logs/
 hm-service/src/main/resources/application-secret.yaml
-
+*application-secret.yaml
