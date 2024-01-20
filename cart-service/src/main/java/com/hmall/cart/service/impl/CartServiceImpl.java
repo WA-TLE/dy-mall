@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmall.cart.domain.dto.CartFormDTO;
+import com.hmall.cart.domain.dto.ItemDTO;
 import com.hmall.cart.domain.po.Cart;
 import com.hmall.cart.domain.vo.CartVO;
 import com.hmall.cart.mapper.CartMapper;
@@ -13,10 +14,19 @@ import com.hmall.common.utils.BeanUtils;
 import com.hmall.common.utils.CollUtils;
 import com.hmall.common.utils.UserContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,14 +42,15 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 
     //private final IItemService itemService;
 
+    private final RestTemplate restTemplate;
+
     @Override
     public void addItem2Cart(CartFormDTO cartFormDTO) {
         // 1.获取登录用户
-        Long userId = 1L /*UserContext.getUser()*/;
+        Long userId = UserContext.getUser();
 
-        // TODO: 2024/1/19 获取登录用户
         // 2.判断是否已经存在
-        if(checkItemExists(cartFormDTO.getItemId(),userId)){
+        if (checkItemExists(cartFormDTO.getItemId(), userId)) {
             // 2.1.存在，则更新数量
             baseMapper.updateNum(cartFormDTO.getItemId(), userId);
             return;
@@ -58,8 +69,8 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 
     @Override
     public List<CartVO> queryMyCarts() {
-        // 1.查询我的购物车列表
-        List<Cart> carts = lambdaQuery().eq(Cart::getUserId, UserContext.getUser()).list();
+        // 1.查询我的购物车列表  // TODO: 2024/1/19  获取登录用户
+        List<Cart> carts = lambdaQuery().eq(Cart::getUserId, 1L/*UserContext.getUser()*/).list();
         if (CollUtils.isEmpty(carts)) {
             return CollUtils.emptyList();
         }
@@ -76,10 +87,31 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 
     private void handleCartItems(List<CartVO> vos) {
         // TODO: 2024/1/19 需要进行修改的模块
-        /*// 1.获取商品id
+        // 1.获取商品id
         Set<Long> itemIds = vos.stream().map(CartVO::getItemId).collect(Collectors.toSet());
+
+
         // 2.查询商品
-        List<ItemDTO> items = itemService.queryItemByIds(itemIds);
+        ResponseEntity<List<ItemDTO>> response = restTemplate.exchange(
+                "http://localhost:8081/items?ids={idx}",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<ItemDTO>>() {
+                },
+                CollUtils.join(itemIds, ",")
+        );
+
+        HttpStatus statusCode = response.getStatusCode();
+
+        if (!statusCode.is2xxSuccessful()) {
+            return;
+        }
+        List<ItemDTO> items = response.getBody();
+
+
+        // List<ItemDTO> items = itemService.queryItemByIds(itemIds);
+
+
         if (CollUtils.isEmpty(items)) {
             return;
         }
@@ -94,7 +126,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
             v.setNewPrice(item.getPrice());
             v.setStatus(item.getStatus());
             v.setStock(item.getStock());
-        }*/
+        }
     }
 
     @Override
