@@ -47,7 +47,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
     @Override
     public void addItem2Cart(CartFormDTO cartFormDTO) {
         // 1.获取登录用户
-        Long userId = UserContext.getUser();
+        Long userId = 1L/*UserContext.getUser()*/;
 
         // 2.判断是否已经存在
         if (checkItemExists(cartFormDTO.getItemId(), userId)) {
@@ -142,7 +142,7 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
         // 1.构建删除条件，userId和itemId
         QueryWrapper<Cart> queryWrapper = new QueryWrapper<Cart>();
         queryWrapper.lambda()
-                .eq(Cart::getUserId, UserContext.getUser())
+                .eq(Cart::getUserId, 1L /*UserContext.getUser()*/)
                 .in(Cart::getItemId, itemIds);
         // 2.删除
         remove(queryWrapper);
