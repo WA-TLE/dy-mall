@@ -12,7 +12,7 @@ spring:
     password: ${hm.db.pw}
   cloud:  # 另外加的?
     nacos:
-      server-addr: 192.168.147.129 # nacos地址
+      server-addr: 101.133.130.46 # nacos地址
 mybatis-plus:
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
