@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static com.hmall.common.contest.UserInfoConstant.USER_INFO;
+
 @Api(tags = "购物车相关接口")
 @RestController
 @RequestMapping("/carts")
@@ -42,7 +44,8 @@ public class CartController {
 
     @ApiOperation("查询购物车列表")
     @GetMapping
-    public List<CartVO> queryMyCarts(){
+    public List<CartVO> queryMyCarts(@RequestHeader(value = USER_INFO, required = false) String userInfo){
+        System.out.println("userInfo = " + userInfo);
         return cartService.queryMyCarts();
     }
     @ApiOperation("批量删除购物车中商品")

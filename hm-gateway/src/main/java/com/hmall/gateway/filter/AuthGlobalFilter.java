@@ -16,6 +16,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+import static com.hmall.common.contest.UserInfoConstant.USER_INFO;
+
 /**
  * @Author: dy
  * @Date: 2024/1/27 18:18
@@ -63,11 +65,14 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         }
 
         //  5. 拿到用户信息, 保存
-        // TODO: 2024/1/27 下次做
+        String userInfo = userId.toString();
+        ServerWebExchange swe = exchange.mutate()
+                .request(builder -> builder.header(USER_INFO, userInfo))
+                .build();
         System.out.println("userId = " + userId);
 
         //  6. 放行
-        return chain.filter(exchange);
+        return chain.filter(swe);
 
     }
 
