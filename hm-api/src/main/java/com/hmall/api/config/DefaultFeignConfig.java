@@ -19,12 +19,16 @@ public class DefaultFeignConfig {
         return Logger.Level.FULL;
     }
 
+    @Bean
     public RequestInterceptor requestInterceptor() {
         return new RequestInterceptor() {
             @Override
             public void apply(RequestTemplate requestTemplate) {
                 Long userId = UserContext.getUser();
-                requestTemplate.header(USER_INFO, userId.toString());
+                if (userId != null) {
+
+                    requestTemplate.header(USER_INFO, userId.toString());
+                }
             }
         };
     }
