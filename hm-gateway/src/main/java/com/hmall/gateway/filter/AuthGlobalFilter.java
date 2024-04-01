@@ -38,6 +38,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
         //  2. 判断是否需要拦截
         if (isExclude(request.getPath().toString())) {
+            //  无需拦截, 直接放行!
             return chain.filter(exchange);
         }
 

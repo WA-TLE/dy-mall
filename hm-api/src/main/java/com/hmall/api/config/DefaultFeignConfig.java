@@ -19,6 +19,7 @@ public class DefaultFeignConfig {
         return Logger.Level.FULL;
     }
 
+    @Bean
     public RequestInterceptor requestInterceptor() {
         return new RequestInterceptor() {
             @Override
