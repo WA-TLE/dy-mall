@@ -3,6 +3,7 @@ package com.hmall.gateway.filter;
 import com.hmall.gateway.config.AuthProperties;
 import com.hmall.gateway.utils.JwtTool;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -25,6 +26,7 @@ import static com.hmall.common.contest.UserInfoConstant.USER_INFO;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private final JwtTool jwtTool;
@@ -79,6 +81,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     private boolean isExclude(String path) {
         for (String excludePath : authProperties.getExcludePaths()) {
+            log.info("要匹配的路径: {}", path);
             if (antPathMatcher.match(excludePath, path)) {
                 return true;
             }

@@ -3,7 +3,6 @@ package com.hmall.api.config;
 import com.hmall.common.utils.UserContext;
 import feign.Logger;
 import feign.RequestInterceptor;
-import feign.RequestTemplate;
 import org.springframework.context.annotation.Bean;
 
 import static com.hmall.common.contest.UserInfoConstant.USER_INFO;
@@ -21,12 +20,9 @@ public class DefaultFeignConfig {
 
     @Bean
     public RequestInterceptor requestInterceptor() {
-        return new RequestInterceptor() {
-            @Override
-            public void apply(RequestTemplate requestTemplate) {
-                Long userId = UserContext.getUser();
-                requestTemplate.header(USER_INFO, userId.toString());
-            }
+        return requestTemplate -> {
+            Long userId = UserContext.getUser();
+            requestTemplate.header(USER_INFO, userId.toString());
         };
     }
 }
