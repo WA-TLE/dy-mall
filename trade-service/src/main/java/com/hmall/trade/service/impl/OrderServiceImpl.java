@@ -86,6 +86,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         cartClient.deleteCartByItemIds(itemIds);
 
         // 4.扣减库存
+        // TODO: 2024/7/24 用户还没付款就扣减库存, 清空购物车?
         try {
             itemClient.deductStock(detailDTOS);
         } catch (Exception e) {
