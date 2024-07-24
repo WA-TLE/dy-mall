@@ -45,6 +45,8 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.hmall.controller
+
+
 hm:
   jwt:
     location: classpath:hmall.jks
@@ -57,4 +59,5 @@ hm:
       - /users/login
       - /items/**
       - /hi
+
 # keytool -genkeypair -alias hmall -keyalg RSA -keypass hmall123 -keystore hmall.jks -storepass hmall123

@@ -1,4 +1,4 @@
 hm:
-  db:
+  db1:
     host: mysql
     pw: dingyu.

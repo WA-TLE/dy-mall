@@ -1,57 +1,20 @@
 server:
   port: 8085
 spring:
-  application:
-    name: pay-service
-  profiles:
-    active: dev
-  datasource:
-    url: jdbc:mysql://${secret.database.host}:3306/hm-pay?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ${secret.database.password}
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 5
-      idle-timeout: 60000
-      max-lifetime: 1800000
-      connection-timeout: 30000
-  cloud:
-    nacos:
-      server-addr: ${my.host}
   config:
     import: application-secret.yaml
-mybatis-plus:
-  configuration:
-    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
-  global-config:
-    db-config:
-      update-strategy: not_null
-      id-type: auto
-logging:
-  level:
-    com.hmall: debug
-  pattern:
-    dateformat: HH:mm:ss:SSS
-  file:
-    path: "logs/${spring.application.name}"
-knife4j:
-  enable: true
-  openapi:
-    title: 黑马商城支付接口文档
-    description: "黑马商城支付接口文档"
-    email: dyu32345@gmail.com
-    concat: dy
-    url: https://www.itcast.cn
-    version: v1.0.0
-    group:
-      default:
-        group-name: default
-        api-rule: package
-        api-rule-resources:
-          - com.hmall.pay.controller
 feign:
   okhttp:
     enabled: true # 开启OKHttp功能
+hm:
+  db:
+    host: 8.130.9.216
+    pw: ${secret.database.password}
+    port: 3306
+    name: hm-pay
+  swagger:
+    title: 黑马商城支付接口文档
+    description: "黑马商城支付接口文档"
+    package: com.hmall.pay.controller
 
 # keytool -genkeypair -alias hmall -keyalg RSA -keypass hmall123 -keystore hmall.jks -storepass hmall123
