@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmall.api.client.ItemClient;
 import com.hmall.api.dto.ItemDTO;
+import com.hmall.cart.config.CartProperties;
 import com.hmall.cart.domain.dto.CartFormDTO;
 import com.hmall.cart.domain.po.Cart;
 import com.hmall.cart.domain.vo.CartVO;
@@ -17,6 +18,7 @@ import com.hmall.common.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,9 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 //    private final String  INSTANCES = "item-service";
 
     private final ItemClient itemClient;
+
+    @Resource
+    private CartProperties cartProperties;
 
     @Override
     public void addItem2Cart(CartFormDTO cartFormDTO) {
@@ -150,8 +155,8 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 
     private void checkCartsFull(Long userId) {
         int count = lambdaQuery().eq(Cart::getUserId, userId).count();
-        if (count >= 10) {
-            throw new BizIllegalException(StrUtil.format("用户购物车课程不能超过{}", 10));
+        if (count >= cartProperties.getMaxAmount()) {
+            throw new BizIllegalException(StrUtil.format("用户购物车课程不能超过{}", cartProperties.getMaxAmount()));
         }
     }
 
