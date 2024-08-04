@@ -3,6 +3,11 @@ server:
 spring:
   config:
     import: application-secret.yaml
+  rabbitmq:
+    host: 8.130.9.216
+    password: dy000000
+    virtual-host: /hm
+    port: 5672
 feign:
   okhttp:
     enabled: true # 开启OKHttp功能

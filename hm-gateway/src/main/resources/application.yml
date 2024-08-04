@@ -1,6 +1,7 @@
 server:
   port: 8080
 
+# 网关的配置被我打包到 nacos 中了
 hm:
   jwt:
     location: classpath:hmall.jks

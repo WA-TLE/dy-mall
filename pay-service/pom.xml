@@ -71,6 +71,11 @@
             <groupId>com.heima</groupId>
             <version>1.0.0</version>
         </dependency>
+        <!--消息发送-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
 
     </dependencies>
