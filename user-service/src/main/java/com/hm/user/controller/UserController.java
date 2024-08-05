@@ -19,6 +19,7 @@ public class UserController {
 
     private final IUserService userService;
 
+    // TODO: 2024/3/31 这里的两个注解 @Validated 和 DTO 中的 @NotNull(message = "用户名不能为空") 的作用/原理 
     @ApiOperation("用户登录接口")
     @PostMapping("login")
     public UserLoginVO login(@RequestBody @Validated LoginFormDTO loginFormDTO){
