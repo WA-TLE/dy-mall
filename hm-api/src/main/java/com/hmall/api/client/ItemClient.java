@@ -16,7 +16,7 @@ import java.util.List;
  * @Date: 2024/1/21 11:13
  * @Description:
  */
-@FeignClient(value = "item-service")
+@FeignClient(value = "item-service") //  声明服务名称
 public interface ItemClient {
     @GetMapping("/items")
     List<ItemDTO> queryItemByIds(@RequestParam("ids") Collection<Long> ids);

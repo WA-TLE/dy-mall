@@ -1,14 +1,24 @@
 spring:
   application:
-    name: trade-service # 服务名称
+    name: trade-service
   profiles:
     active: dev
   cloud:
     nacos:
-      server-addr: 101.133.130.46
+      server-addr: 8.130.9.216
       config:
-        file-extension: yaml # 文件后缀名
-        shared-configs: # 共享配置
-          - dataId: shared-jdbc.yml # 共享mybatis配置
-          - dataId: shared-log.yml # 共享日志配置
-          - dataId: shared-swagger.yml # 共享日志配置
+        file-extension: yaml
+        shared-configs:
+          - data-id: shared-jdbc.yaml
+          - data-id: shared-log.yaml
+          - data-id: shared-swagger.yaml
+          - data-id: shared-mp.yaml
+
+#      config:
+#        file-extension: yaml # 文件后缀名
+#        shared-configs: # 共享配置
+#          - dataId: shared-jdbc.yaml # 共享mybatis配置
+#          - dataId: shared-log.yaml # 共享日志配置
+#          - dataId: shared-swagger.yaml # 共享日志配置
+
+

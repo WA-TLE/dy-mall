@@ -1,8 +1,8 @@
 server:
   port: 8083
-feign:
-  okhttp:
-    enabled: true # 开启OKHttp功能
+spring:
+  config:
+    import: application-secret.yaml
 
 hm:
   jwt:
@@ -16,10 +16,12 @@ hm:
       - /users/login
       - /items/**
       - /hi
-
-  swagger:
-    title: 用户服务接口文档
-    package: com.hm.user.controller
   db:
-    database: hm-user
-# keytool -genkeypair -alias hmall -keyalg RSA -keypass hmall123 -keystore hmall.jks -storepass hmall123
+    host: 8.130.9.216
+    pw: dingyu@.
+    port: 3306
+    name: hm-user
+  swagger:
+    title: 黑马商城用户管理接口文档
+    description: "黑马商城用户管理接口文档"
+    package: com.hm.user.controller

@@ -1,14 +1,25 @@
 server:
   port: 8085
+spring:
+  config:
+    import: application-secret.yaml
+  rabbitmq:
+    host: 8.130.9.216
+    password: dy000000
+    virtual-host: /hm
+    port: 5672
 feign:
   okhttp:
     enabled: true # 开启OKHttp功能
-
-
 hm:
-  swagger:
-    title: 支付服务接口文档
-    package: com.hmall.pay.controller
   db:
-    database: hm-pay
+    host: 8.130.9.216
+    pw: ${secret.database.password}
+    port: 3306
+    name: hm-pay
+  swagger:
+    title: 黑马商城支付接口文档
+    description: "黑马商城支付接口文档"
+    package: com.hmall.pay.controller
+
 # keytool -genkeypair -alias hmall -keyalg RSA -keypass hmall123 -keystore hmall.jks -storepass hmall123

@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Author: dy
- * @Date: 2024/1/29 19:57
+ * @Date: 2024/7/24 19:45
  * @Description:
  */
-@Data
-@Component
 @ConfigurationProperties(prefix = "hm.cart")
+@Component
+@Data
 public class CartProperties {
     private Integer maxAmount;
 }

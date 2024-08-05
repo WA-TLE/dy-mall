@@ -18,6 +18,7 @@ import com.hmall.common.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,8 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
 
     private final ItemClient itemClient;
 
-    private final CartProperties cartProperties;
+    @Resource
+    private CartProperties cartProperties;
 
     @Override
     public void addItem2Cart(CartFormDTO cartFormDTO) {
@@ -127,9 +129,6 @@ public class CartServiceImpl extends ServiceImpl<CartMapper, Cart> implements IC
             return;
         }
         // 3.转为 id 到 item的map
-        // TODO: 2024/3/31 1. 上面的收集为什么用 Set?  1. 自动去重, 2. 对于一些操作 (查找, 删除) 它会更高效  
-        // TODO: 2024/3/31 这里 Function.identity() 函数的作用? Function.identity() 会被自动应用到流的每个元素上
-        //                  也就是说，它告诉 toMap 操作，Map 的每个 value 应该就是元素本身
         Map<Long, ItemDTO> itemMap = items.stream().collect(Collectors.toMap(ItemDTO::getId, Function.identity()));
         // 4.写入vo
         for (CartVO v : vos) {
